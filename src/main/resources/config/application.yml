@@ -1,6 +1,9 @@
 spring:
   application:
     name: vlad-project
+  jpa:
+    hibernate:
+      ddl-auto: validate
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://127.0.0.1:5433/service_db
