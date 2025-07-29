@@ -1,0 +1,6 @@
+name: eventservice
+services:
+  postgresql:
+    extends:
+      file: ./postgresql.yml
+      service: postgresql
