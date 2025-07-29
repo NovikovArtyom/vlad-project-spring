@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: vlad-project
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://127.0.0.1:5433/service_db
+    username: user
+    password: password
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  liquibase:
+    change-log: classpath:db/master.xml
+
+server:
+  port: 8081
+

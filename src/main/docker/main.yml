@@ -1,4 +1,4 @@
-name: eventservice
+name: service
 services:
   postgresql:
     extends:
