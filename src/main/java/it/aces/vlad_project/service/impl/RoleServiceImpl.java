@@ -1,14 +1,18 @@
 package it.aces.vlad_project.service.impl;
 
 import it.aces.vlad_project.dto.role.RoleCreateDto;
+import it.aces.vlad_project.dto.role.RoleFilterDto;
 import it.aces.vlad_project.dto.role.RoleResponseDto;
 import it.aces.vlad_project.dto.role.RoleUpdateDto;
 import it.aces.vlad_project.entity.RoleEntity;
 import it.aces.vlad_project.mapper.RoleMapper;
 import it.aces.vlad_project.repository.RoleRepository;
+import it.aces.vlad_project.repository.specification.RoleSpecification;
 import it.aces.vlad_project.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +27,14 @@ import java.util.UUID;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<RoleResponseDto> getAllRoles(RoleFilterDto roleFilterDto, Pageable pageable) {
+        log.debug("Получение списка Role");
+        return roleRepository.findAll(RoleSpecification.filter(roleFilterDto), pageable)
+                .map(roleMapper::toDto);
+    }
 
     @Override
     @Transactional(readOnly = true)

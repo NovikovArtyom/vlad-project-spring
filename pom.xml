@@ -32,6 +32,7 @@
 		<spring.validation.version>3.4.2</spring.validation.version>
 		<mapstruct.version>1.6.2</mapstruct.version>
 		<lombok.version>1.18.36</lombok.version>
+		<hibernate.version>6.4.4.Final</hibernate.version>
 	</properties>
 	<dependencies>
 
@@ -126,6 +127,14 @@
 			<version>0.12.6</version>
 		</dependency>
 
+		<!-- Hibernate Metamodel Generator -->
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			<version>${hibernate.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -144,6 +153,11 @@
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>${mapstruct.version}</version>
+						</path>
+						<path>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+							<version>${hibernate.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

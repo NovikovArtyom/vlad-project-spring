@@ -1,8 +1,10 @@
 package it.aces.vlad_project.dto.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import it.aces.vlad_project.dto.role.RoleResponseDto;
 import lombok.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -14,4 +16,5 @@ import java.util.UUID;
 public class UserResponseDto {
     private UUID id;
     private String email;
+    private Set<RoleResponseDto> role;
 }

@@ -1,15 +1,16 @@
 package it.aces.vlad_project.service.impl;
 
-import it.aces.vlad_project.dto.user.UserCreateDto;
-import it.aces.vlad_project.dto.user.UserResponseDto;
-import it.aces.vlad_project.dto.user.UserUpdateDto;
+import it.aces.vlad_project.dto.user.*;
 import it.aces.vlad_project.entity.RoleEntity;
 import it.aces.vlad_project.entity.UserEntity;
 import it.aces.vlad_project.mapper.UserMapper;
 import it.aces.vlad_project.repository.RoleRepository;
 import it.aces.vlad_project.repository.UserRepository;
+import it.aces.vlad_project.repository.specification.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -51,6 +52,13 @@ public class UserServiceImpl implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getTitle()))
                 .collect(Collectors.toSet());
         return new User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserThinResponseDto> getAllUsers(UserFilterDto userFilterDto, Pageable pageable) {
+        log.debug("Получение списка User");
+        return userRepository.findAll(UserSpecification.filter(userFilterDto), pageable)
+                .map(userMapper::toUserThinDto);
     }
 
     @Transactional
