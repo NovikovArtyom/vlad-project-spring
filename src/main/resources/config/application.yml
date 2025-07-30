@@ -1,3 +1,11 @@
+logging:
+  level:
+    root: INFO
+    org.springframework: DEBUG
+    it.aces.vlad_project: DEBUG
+jwt:
+  accessTokenSecret: j38mdXlEKndX7DVLslV3fj9RvgXh5mTl9Hh2YrcAeOY=
+  accessLifetime: 1d
 spring:
   application:
     name: vlad-project

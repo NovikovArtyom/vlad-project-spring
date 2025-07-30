@@ -11,8 +11,8 @@
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="user_id" type="UUID">
-                <constraints nullable="false" foreignKeyName="fk_comment_user"
-                             referencedTableName="user" referencedColumnNames="id" />
+                <constraints nullable="false" foreignKeyName="fk_comment_users"
+                             referencedTableName="users" referencedColumnNames="id" />
             </column>
             <column name="comment" type="VARCHAR(255)">
                 <constraints nullable="false" />

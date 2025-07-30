@@ -5,16 +5,18 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
 
-    <changeSet id="20250729_1527_create_user_table" author="Novikov Artyom">
-        <createTable tableName="user">
+    <changeSet id="20250730_1112_create_user_role_table" author="Novikov Artyom">
+        <createTable tableName="user_role">
             <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="email" type="VARCHAR(25)">
-                <constraints nullable="false"/>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_user_role_users"
+                             referencedTableName="users" referencedColumnNames="id" />
             </column>
-            <column name="password" type="VARCHAR(25)">
-                <constraints nullable="false"/>
+            <column name="role_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_user_role_role"
+                             referencedTableName="role" referencedColumnNames="id" />
             </column>
         </createTable>
     </changeSet>

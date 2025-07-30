@@ -5,4 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends BaseRepository<UserEntity> {
+    UserEntity findByEmail(String email);
+    Boolean existsByEmail(String email);
 }

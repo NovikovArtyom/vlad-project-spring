@@ -1,0 +1,46 @@
+package it.aces.vlad_project.api.controller;
+
+import it.aces.vlad_project.api.RoleApi;
+import it.aces.vlad_project.dto.role.RoleCreateDto;
+import it.aces.vlad_project.dto.role.RoleResponseDto;
+import it.aces.vlad_project.dto.role.RoleUpdateDto;
+import it.aces.vlad_project.service.RoleService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+public class RoleController implements RoleApi {
+    private final RoleService roleService;
+
+    @Override
+    public ResponseEntity<RoleResponseDto> getRoleById(UUID id) {
+        log.debug("Запрос на получение Role по id: {}", id);
+        return ResponseEntity.status(HttpStatus.OK).body(roleService.getRoleById(id));
+    }
+
+    @Override
+    public ResponseEntity<RoleResponseDto> createRole(RoleCreateDto roleCreateDto) {
+        log.debug("Запрос на создание Role: {}", roleCreateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(roleService.createRole(roleCreateDto));
+    }
+
+    @Override
+    public ResponseEntity<RoleResponseDto> updateRole(UUID id, RoleUpdateDto roleUpdateDto) {
+        log.debug("Запрос на редактирование Role: {}", roleUpdateDto);
+        return ResponseEntity.status(HttpStatus.OK).body(roleService.updateRole(id, roleUpdateDto));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteRole(UUID id) {
+        log.debug("Запрос на удаление Role: {}", id);
+        roleService.deleteRole(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+}
