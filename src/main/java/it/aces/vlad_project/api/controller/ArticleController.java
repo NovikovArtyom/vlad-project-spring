@@ -25,7 +25,8 @@ public class ArticleController implements ArticleApi {
     private final ArticleService articleService;
 
     @Override
-    public ResponseEntity<ApiResponse<ArticleResponseDto>> getAllArticles(ArticleFilterDto articleFilterDto, Pageable pageable) {
+    public ResponseEntity<ApiResponse<ArticleResponseDto>> getAllArticles(ArticleFilterDto articleFilterDto,
+                                                                          Pageable pageable) {
         log.debug("Запрос на получение списка Article");
         Page<ArticleResponseDto> page = articleService.getAllArticles(articleFilterDto, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.of(page));
@@ -55,7 +56,7 @@ public class ArticleController implements ArticleApi {
 
     @Override
     public ResponseEntity<Void> deleteArticle(UUID id, Authentication authentication) {
-        log.debug("Запрос на удаление Role: {}", id);
+        log.debug("Запрос на удаление Article: {}", id);
         String email = authentication.getName();
         articleService.deleteArticle(id, email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

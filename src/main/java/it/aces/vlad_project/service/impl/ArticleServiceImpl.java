@@ -31,6 +31,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final PermissionService permissionService;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ArticleResponseDto> getAllArticles(ArticleFilterDto articleFilterDto, Pageable pageable) {
         log.debug("Получение списка Article");
         return articleRepository.findAll(ArticleSpecification.filter(articleFilterDto), pageable)
@@ -38,6 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ArticleResponseDto getArticleById(UUID id) {
         log.debug("Получение Article по id = {}", id);
         ArticleEntity article = articleRepository.findEntityById(id, ArticleEntity.class);
@@ -45,6 +47,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public ArticleResponseDto createArticle(ArticleCreateDto articleCreateDto, String email) {
         log.debug("Создание Article на основе Dto: {}", articleCreateDto);
         ArticleEntity article = articleMapper.toEntity(articleCreateDto);
@@ -55,6 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public ArticleResponseDto updateArticle(UUID id, ArticleUpdateDto articleUpdateDto, String email) {
         log.debug("Редактирование Article на основе Dto: {}", articleUpdateDto);
         ArticleEntity article = articleRepository.findEntityById(id, ArticleEntity.class);
@@ -70,6 +74,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public void deleteArticle(UUID id, String email) {
         log.debug("Удаление Article по id = {}", id);
         ArticleEntity article = articleRepository.findEntityById(id, ArticleEntity.class);

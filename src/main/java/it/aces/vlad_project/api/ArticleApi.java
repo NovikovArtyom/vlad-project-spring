@@ -43,6 +43,5 @@ public interface ArticleApi {
 
     @Operation(summary = "Удаление поста")
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteArticle(@PathVariable UUID id,
-                                       Authentication authentication);
+    ResponseEntity<Void> deleteArticle(@PathVariable UUID id, Authentication authentication);
 }
