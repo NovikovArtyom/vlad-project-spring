@@ -32,8 +32,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("api/v1/auth/admin/**").authenticated()
-                        .requestMatchers("api/v1/admin/**").authenticated()
+                        .requestMatchers("api/v1/role/**").authenticated()
+                        .requestMatchers("api/v1/user/getAll").hasRole("ADMIN")
+                        .requestMatchers("api/v1/user/**").authenticated()
+                        .requestMatchers("api/v1/article/**").authenticated()
+                        .requestMatchers("api/v1/video/**").authenticated()
+                        .requestMatchers("api/v1/comment/**").authenticated()
                         .anyRequest().permitAll())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

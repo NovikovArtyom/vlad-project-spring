@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MappingUtil {
+
     @Named("mapEntitiesToIds")
     public static Set<UUID> mapEntitiesToIds(Set<?> entities) {
         if (entities == null) {

@@ -8,6 +8,7 @@ import it.aces.vlad_project.dto.role.RoleFilterDto;
 import it.aces.vlad_project.dto.role.RoleResponseDto;
 import it.aces.vlad_project.dto.role.RoleUpdateDto;
 import it.aces.vlad_project.util.ApiResponse;
+import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public interface RoleApi {
 
     @Operation(summary = "Создание роли")
     @PostMapping
-    ResponseEntity<RoleResponseDto> createRole(@RequestBody RoleCreateDto roleCreateDto);
+    ResponseEntity<RoleResponseDto> createRole(@Valid @RequestBody RoleCreateDto roleCreateDto);
 
     @Operation(summary = "Редактирование роли")
     @PatchMapping("/{id}")

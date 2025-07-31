@@ -23,6 +23,7 @@ public abstract class BaseEntity<T> implements Serializable {
     private UUID id;
 
     @Comment("Идентификатор пользователя, создавшего сущность")
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_article_users"))
+    private UserEntity user;
 }

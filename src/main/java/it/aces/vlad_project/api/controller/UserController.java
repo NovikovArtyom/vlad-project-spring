@@ -34,12 +34,6 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<UserResponseDto> createUser(UserCreateDto userCreateDto) {
-        log.debug("Запрос на создание User: {}", userCreateDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userCreateDto));
-    }
-
-    @Override
     public ResponseEntity<UserResponseDto> updateUser(UUID id, UserUpdateDto userUpdateDto) {
         log.debug("Запрос на редактирование User: {}", userUpdateDto);
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, userUpdateDto));
