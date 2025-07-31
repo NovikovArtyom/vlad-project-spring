@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@Tag(name = "Посты")
+@Tag(name = "Видео")
 @RequestMapping(Constants.API_CONTEXT_VERSION + VideoApi.API_PATH)
 public interface VideoApi {
     String API_PATH = "/video";

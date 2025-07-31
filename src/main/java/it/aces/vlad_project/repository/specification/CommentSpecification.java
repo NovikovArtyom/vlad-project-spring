@@ -1,10 +1,7 @@
 package it.aces.vlad_project.repository.specification;
 
-import it.aces.vlad_project.dto.video.VideoFilterDto;
-import it.aces.vlad_project.entity.UserEntity;
-import it.aces.vlad_project.entity.UserEntity_;
-import it.aces.vlad_project.entity.VideoEntity;
-import it.aces.vlad_project.entity.VideoEntity_;
+import it.aces.vlad_project.dto.comment.CommentFilterDto;
+import it.aces.vlad_project.entity.*;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import lombok.NoArgsConstructor;
@@ -16,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor
-public class VideoSpecification {
-    public static Specification<VideoEntity> filter(VideoFilterDto filter) {
+public class CommentSpecification {
+    public static Specification<CommentEntity> filter(CommentFilterDto filter) {
         return (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
             Optional.ofNullable(filter.getSearch())
@@ -30,17 +27,22 @@ public class VideoSpecification {
                     .map(token -> String.format("%%%s%%", token))
                     .flatMap(expr -> {
                         List<Predicate> predicatesList = new ArrayList<>();
-                        predicatesList.add(builder.like(builder.lower(root.get(VideoEntity_.NAME)), expr));
-                        predicatesList.add(builder.like(builder.lower(root.get(VideoEntity_.URL)), expr));
+                        predicatesList.add(builder.like(builder.lower(root.get(CommentEntity_.COMMENT)), expr));
                         return predicatesList.stream();
                     })
                     .reduce(builder::or)
                     .map(predicates::add);
 
-            Optional.ofNullable(filter.getUserId())
+            Optional.ofNullable(filter.getArticleId())
                     .ifPresent(id -> {
-                        Join<VideoEntity, UserEntity> userJoin = root.join(VideoEntity_.USER);
-                        predicates.add(builder.equal(userJoin.get(UserEntity_.ID), id));
+                        Join<CommentEntity, ArticleEntity> articleJoin = root.join(CommentEntity_.ARTICLE);
+                        predicates.add(builder.equal(articleJoin.get(ArticleEntity_.ID), id));
+                    });
+
+            Optional.ofNullable(filter.getVideoId())
+                    .ifPresent(id -> {
+                        Join<CommentEntity, VideoEntity> videoJoin = root.join(CommentEntity_.VIDEO);
+                        predicates.add(builder.equal(videoJoin.get(VideoEntity_.ID), id));
                     });
 
             return predicates.stream()
