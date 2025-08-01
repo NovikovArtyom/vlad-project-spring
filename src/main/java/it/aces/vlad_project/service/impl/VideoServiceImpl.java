@@ -29,6 +29,7 @@ public class VideoServiceImpl implements VideoService {
     private final VideoMapper videoMapper;
     private final UserRepository userRepository;
     private final PermissionService permissionService;
+    private final EmailService emailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -53,6 +54,7 @@ public class VideoServiceImpl implements VideoService {
         UserEntity user = userRepository.findByEmail(email);
         video.setUser(user);
         VideoEntity createdVideo = videoRepository.save(video);
+        emailService.sendEmail(1, email, VideoEntity.class.getSimpleName());
         return videoMapper.toDto(createdVideo);
     }
 
@@ -69,6 +71,7 @@ public class VideoServiceImpl implements VideoService {
             video.setUrl(videoUpdateDto.getUrl());
         }
         VideoEntity updatedVideo = videoRepository.save(video);
+        emailService.sendEmail(2, email, VideoEntity.class.getSimpleName());
         return videoMapper.toDto(updatedVideo);
     }
 
@@ -79,5 +82,6 @@ public class VideoServiceImpl implements VideoService {
         VideoEntity video = videoRepository.findEntityById(id, VideoEntity.class);
         permissionService.checkOwnerOrAdmin(video, email, VideoEntity::getUser);
         videoRepository.delete(video);
+        emailService.sendEmail(3, email, VideoEntity.class.getSimpleName());
     }
 }

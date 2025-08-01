@@ -9,6 +9,17 @@ jwt:
 spring:
   application:
     name: vlad-project
+  mail:
+    username: artyom.nov.1997artem@yandex.ru
+    password: boalxgxbofaipkgn
+    host: smtp.yandex.ru
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    port: 587
   jpa:
     hibernate:
       ddl-auto: validate

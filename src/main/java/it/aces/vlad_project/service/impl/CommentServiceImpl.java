@@ -34,6 +34,7 @@ public class CommentServiceImpl implements CommentService {
     private final PermissionService permissionService;
     private final ArticleRepository articleRepository;
     private final VideoRepository videoRepository;
+    private final EmailService emailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -70,6 +71,7 @@ public class CommentServiceImpl implements CommentService {
         }
         comment.setUser(user);
         CommentEntity createdComment = commentRepository.save(comment);
+        emailService.sendEmail(1, email, CommentEntity.class.getSimpleName());
         return commentMapper.toDto(createdComment);
     }
 
@@ -83,6 +85,7 @@ public class CommentServiceImpl implements CommentService {
             comment.setComment(commentUpdateDto.getComment());
         }
         CommentEntity updatedComment = commentRepository.save(comment);
+        emailService.sendEmail(2, email, CommentEntity.class.getSimpleName());
         return commentMapper.toDto(updatedComment);
     }
 
@@ -93,5 +96,6 @@ public class CommentServiceImpl implements CommentService {
         CommentEntity comment = commentRepository.findEntityById(id, CommentEntity.class);
         permissionService.checkOwnerOrAdmin(comment, email, CommentEntity::getUser);
         commentRepository.deleteById(id);
+        emailService.sendEmail(3, email, CommentEntity.class.getSimpleName());
     }
 }

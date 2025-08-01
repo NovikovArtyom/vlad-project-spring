@@ -29,6 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleMapper articleMapper;
     private final UserRepository userRepository;
     private final PermissionService permissionService;
+    private final EmailService emailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -54,6 +55,7 @@ public class ArticleServiceImpl implements ArticleService {
         UserEntity user = userRepository.findByEmail(email);
         article.setUser(user);
         ArticleEntity createdArticle = articleRepository.save(article);
+        emailService.sendEmail(1, email, ArticleEntity.class.getSimpleName());
         return articleMapper.toDto(createdArticle);
     }
 
@@ -70,6 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
             article.setArticle(articleUpdateDto.getArticle());
         }
         ArticleEntity updatedArticle = articleRepository.save(article);
+        emailService.sendEmail(2, email, ArticleEntity.class.getSimpleName());
         return articleMapper.toDto(updatedArticle);
     }
 
@@ -80,5 +83,6 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleEntity article = articleRepository.findEntityById(id, ArticleEntity.class);
         permissionService.checkOwnerOrAdmin(article, email, ArticleEntity::getUser);
         articleRepository.deleteById(id);
+        emailService.sendEmail(3, email, ArticleEntity.class.getSimpleName());
     }
 }
