@@ -1,14 +1,15 @@
-logging:
-  level:
-    root: INFO
-    org.springframework: DEBUG
-    it.aces.vlad_project: DEBUG
 jwt:
   accessTokenSecret: j38mdXlEKndX7DVLslV3fj9RvgXh5mTl9Hh2YrcAeOY=
   accessLifetime: 1d
 spring:
   application:
     name: vlad-project
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
+        maxPageSize: 100
   mail:
     username: artyom.nov.1997artem@yandex.ru
     password: boalxgxbofaipkgn
@@ -20,20 +21,57 @@ spring:
           starttls:
             enable: true
     port: 587
+
+---
+server:
+  port: 8082
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:6541/service-db-dev
+    username: postgres
+    password: pwKj9fzR
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: validate
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://127.0.0.1:5433/service_db
-    username: user
-    password: password
-    hikari:
-      poolName: Hikari
-      auto-commit: false
   liquibase:
     change-log: classpath:db/master.xml
 
-server:
-  port: 8081
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:db/master.xml
 
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:vlad-project;DB_CLOSE_DELAY=-1
+    username: user
+    password: password
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    enabled: false

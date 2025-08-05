@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: db-prod
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=service-db-prod
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=abXy78pL
+
+  service:
+    container_name: service
+    build: ../..
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=db-prod
+      - DB_PORT=5432
+      - DB_NAME=service-db-prod
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=abXy78pL
