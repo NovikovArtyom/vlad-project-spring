@@ -1,6 +1,12 @@
+server:
+  port: 8081
 jwt:
   accessTokenSecret: j38mdXlEKndX7DVLslV3fj9RvgXh5mTl9Hh2YrcAeOY=
   accessLifetime: 1d
+springdoc:
+  swagger-ui:
+    doc-expansion: none
+    tags-sorter: alpha
 spring:
   application:
     name: vlad-project
@@ -23,8 +29,6 @@ spring:
     port: 587
 
 ---
-server:
-  port: 8082
 spring:
   config:
     activate:

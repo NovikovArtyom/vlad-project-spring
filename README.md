@@ -100,9 +100,10 @@ role
 
 ### Алгоритм запуска:
 1. Открыть корневую директорию проекта
-2. Сбилдить проект:
+2. Перейти в ветку develop
+3. Сбилдить проект:
 ``mvn clean install``
-3. Перейти в директорию с docker-compose файлом: ``cd docker/prod``
-4. Поднять контейнеры с приложением: ``docker compose up -d --build``
-5. Открыть swagger проекта: http://localhost:8081/swagger-ui/index.html#
+4. Перейти в директорию с docker-compose файлом: ``cd docker/prod``
+5. Поднять контейнеры с приложением: ``docker compose up -d --build``
+6. Открыть swagger проекта: http://localhost:8081/swagger-ui/index.html#
 
