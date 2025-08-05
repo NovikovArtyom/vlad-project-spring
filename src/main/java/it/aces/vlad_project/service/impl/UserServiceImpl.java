@@ -97,4 +97,9 @@ public class UserServiceImpl implements UserDetailsService {
         }
         userRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Integer countUsers() {
+        return userRepository.findAll().size();
+    }
 }

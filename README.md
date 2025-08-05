@@ -93,17 +93,14 @@ role
 
 Для запуска приложения, на локальной машине должно быть установлено:
 
-- jdk-21
-- Maven-3.9.11
 - Docker
 - docker-compose
 
 ### Алгоритм запуска:
-1. Открыть корневую директорию проекта
-2. Перейти в ветку develop
-3. Сбилдить проект:
-``mvn clean install``
-4. Перейти в директорию с docker-compose файлом: ``cd docker/prod``
-5. Поднять контейнеры с приложением: ``docker compose up -d --build``
-6. Открыть swagger проекта: http://localhost:8081/swagger-ui/index.html#
+1. Перейти в ветку develop
+2. Перейти в директорию с docker-compose файлом: ``cd docker/prod``
+3. Поднять контейнеры с приложением: ``docker compose up -d --build``
+4. Открыть swagger проекта: http://localhost:8081/swagger-ui/index.html#
+
+*для тестирования можно использовать созданного пользователя (email - artyom.nov.1997@gmail.com, password - Nora.11223344)
 
